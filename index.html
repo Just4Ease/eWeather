@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html ng-app="e-Weather" itemscope itemtype="http://schema.org/myWeather App">
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <head>
+        <title>my Weather App</title>
+        
+
+        <!-- Add the following three tags inside head. -->
+        <meta itemprop="name" content="myWeather App">
+        <meta itemprop="description" content="Current Weather Situation Of Any Location On Earth, Useful For Travellers, Checkout the link.">
+        <meta itemprop="image" content="www.todtribeofjudah.com/weather/icons/8.svg">
+        
+        
+        <!-- Scripts -->
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-animate.min.js"></script>
+        <script src="js/angular-aria.min.js"></script>
+        <script src="js/angular-material.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="js/script.js"></script>
+
+        <!-- Styles -->
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/angular-material.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://apis.google.com/js/platform.js" async defer>
+            {parsetags: 'explicit'}
+        </script>
+    </head>
+    <!-- Space Please -->
+    <body ng-controller="WeatherSearch">
+        <div ng-cloak>
+            <br>
+            
+            <!-- Beginning Of Top Section, "The Search Bar"-->
+            <div  flex layout="row" layout-xs="column" class="container">
+                <md-input-container layout="row" flex  class="md-warn search-bar md-whiteframe-z1">
+                    <label>TYPE A LOCATION TO SEARCH FOR WEATHER REPORT</label>
+                    <input id="inp" ng-model="weatherSearchInput" ng-model-instant class="search-bar"></md-input-container>
+                <md-button ng-click="srch()" class="md-whiteframe-z1 md-primary search-button">SEARCH</md-button>
+                <md-progress-linear md-mode='indeterminate' class="md-warn md-hue-3"></md-progress-linear>
+            </div>
+            <!-- End Of Top Secton -->
+
+
+
+
+            <!-- Beginnig of the results -->
+            <br>
+            <md-toolbar class="md-primary md-hue-3 titles"><h2>WEATHER REPORT</h2></md-toolbar>
+            <div flex layout="row" layout-xs="column" id="content">
+
+
+                <!-- Results and Render -->
+
+                <md-card ng-hide class="col-md-3">
+                    <md-toolbar class="titles md-hue-3"><h3>DETAILS</h3></md-toolbar>
+                    <md-content>
+                        <div>
+                            <md-card>
+                                <md-content id="result">
+
+
+
+
+
+
+                                    <!-- Weather Icon and Details Attached -->
+                                    <h2 class="first-res-con"> <img class="weather-image first-res-con" src="{{iconSet}}" alt="{{iconSetDesc}}"> &asymp; {{currTemp}} <sup>&#9679;C</sup><p style="text-transform: Capitalize;">{{weatherResults.weather[0].description }}</p></h2>
+
+                                    <h4 style="text-align: left; text-transform: Capitalize;">{{geoCoded.results[0].formatted_address}}</h4>
+                                    <h5>COORDS : <a>{{geoLat}}, {{geoLon}}</a></h5>
+                                    <h5>WIND SPEED : {{weatherResults.wind.speed}}</h5>
+                                    <h5>PRESSURE : {{weatherResults.main.pressure}}</h5>
+                                    <h5>HUMIDITY : {{weatherResults.main.humidity}}</h5>
+                                </md-content>
+                            </md-card>
+                        </div>
+                    </md-content>
+                </md-card>
+
+
+
+
+                <md-card class="for-now-card col-md-6">
+                    <md-toolbar class="titles md-primary md-hue-3"><h2>MAP VIEW</h2></md-toolbar>
+                    <div id='myMap'>
+
+                    </div>
+
+                </md-card>
+
+
+                <!-- Share Icons -->
+                <md-card flex class="col-md-2 last">
+                    <md-toolbar flex class="md-primary titles md-hue-3"><h3>SHARE</h3></md-toolbar>
+                    <a href="http://www.facebook.com/#" target="_blank"><md-button class="md-whiteframe-z2 share"><img src="./icons/facebook.png" class="iconset" alt="Share on Facebook">Facebook</md-button></a>
+                    <a href="http://plus.google.com/#" target="_blank"><md-button class="md-whiteframe-z2 share"><img src="./icons/g+.png" class="iconset" alt="Share on Google+">Google+</md-button></a> 
+
+                    <!--  <div class="g-plus" data-action="share" data-height="24"><md-button></md-button></div> -->
+
+
+
+                    <a href="http://twitter.com/#" target="_blank"><md-button class="md-whiteframe-z2 share"><img src="./icons/twitter.png" class="iconset" alt="Share on Twitter">Twitter</md-button></a>
+                    <a href="http://pinterest.com/#" target="_blank"><md-button class="md-whiteframe-z2 share"><img src="./icons/pinterest.png" class="iconset" alt="Share on Pinterest">Pinterest</md-button></a>
+                    <a href="http://linkedin.com/#" target="_blank"><md-button class="md-whiteframe-z2 share"><img src="./icons/linkedin.png" class="iconset" alt="Share on linkedin">Linkedin</md-button></a>
+
+                    <a href="http://www.github.com/Just4Ease"><md-button class="md-whiteframe-z2 share"><img src="icons/Github.png" alt="About share" class="iconset">About Author</md-button></a>
+                    <!--  <div
+class="fb-like"
+data-share="true"
+data-width="450"
+data-show-faces="true">
+</div> -->
+                </md-card>
+            </div>
+        </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIdzxbd9ouVnupvSqEN3DTR-O3oLL05zo" async defer></script>
+        <!-- <script>
+window.fbAsyncInit = function() {
+FB.init({
+appId      : '487534178111610',
+xfbml      : true,
+version    : 'v2.5'
+});
+};
+
+(function(d, s, id){
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) {return;}
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/en_US/sdk.js";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script> -->
+        <script>
+            var GhostScript = 'Hello, Site Console Crawler, Thanks For Checking This Project Out...\nFeel Free To Send Me Suggestions To Make This Application A Better One.\n Git: http://www.github.com/Just4Ease\nFacebook: http://www.facebook.com/Just4Ease\nTwitter:http://www.twitter.com/Just4Ease'        </script>
+
+    </body>
+</html>
